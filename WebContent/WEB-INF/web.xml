@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	
+
+	<!-- root WAC설정은 밖에서 ContextLoaderListener, -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<!-- ContextConfigLocation, dispatcher도 같다. name은 항상 고정, 변수 -->
+		<param-name>contextConfigLocation</param-name>
+		<!-- 변수 값, xml을 찾는 경로설정 -->
+		<param-value>classpath:spring/root/*.xml</param-value>
+	</context-param>
+
+	<!-- WAC DispatcherServlet -->
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 내부에서 설정 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/dispatcher/*.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<!-- 배치하면 객체를 생성 -->
+	</servlet>
+
+	<!-- webapp1/xxx, 아무것도 맵핑이 안되면 index.jsp를 찾는다 -->
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+</web-app>
